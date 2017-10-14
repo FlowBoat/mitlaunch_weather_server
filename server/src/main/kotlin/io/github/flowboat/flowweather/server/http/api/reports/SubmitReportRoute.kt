@@ -9,6 +9,7 @@ import io.github.flowboat.flowweather.server.db.models.dao.DbSensor
 import io.github.flowboat.flowweather.server.db.models.dao.DbSensorValue
 import io.github.flowboat.flowweather.server.http.api.HttpApiSerializer
 import io.github.flowboat.flowweather.server.http.api.reports.model.DeviceReport
+import io.github.flowboat.flowweather.util.finiteOrNegativeOne
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.ktor.pipeline.PipelineInterceptor
 import org.joda.time.DateTime
@@ -39,7 +40,7 @@ class SubmitReportRoute {
                     this.report = dbReport
                     name = t.name
                     vendor = t.vendor
-                    power = BigDecimal(t.power.toDouble())
+                    power = BigDecimal(t.power.toDouble().finiteOrNegativeOne())
                 }
 
                 u.value.forEachIndexed { index, fl ->
@@ -47,7 +48,7 @@ class SubmitReportRoute {
                         this.sensor = sensor
 
                         this.index = index
-                        value = BigDecimal(fl.toDouble())
+                        value = BigDecimal(fl.toDouble().finiteOrNegativeOne())
                     }
                 }
             }
