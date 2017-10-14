@@ -1,0 +1,41 @@
+apply plugin: 'kotlin2js'
+
+repositories {
+    maven {
+        url  "https://dl.bintray.com/null-dev/kdom"
+    }
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile "xyz.nulldev.kdom:kdom:1.0"
+
+    compile "org.jetbrains.kotlinx:kotlinx-html-js:0.6.4"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
+}
+
+task assembleWeb(type: Sync) {
+    configurations.compile.each { File file ->
+        from(zipTree(file.absolutePath), {
+            includeEmptyDirs = false
+            include { fileTreeElement ->
+                def path = fileTreeElement.path
+                path.endsWith(".js") && (path.startsWith("META-INF/resources/") ||
+                        !path.startsWith("META-INF/"))
+            }
+        })
+    }
+    from compileKotlin2Js.destinationDir
+    into "${projectDir}/build/web/js"
+
+    dependsOn classes
+}
+
+task copyResources(type: Copy) {
+    from "src/main/resources"
+    into "${projectDir}/build/web/"
+}
+
+assembleWeb.dependsOn copyResources
+assemble.dependsOn assembleWeb

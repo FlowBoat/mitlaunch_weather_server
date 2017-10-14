@@ -1,0 +1,4 @@
+rootProject.name = 'FlowServer'
+
+include 'server'
+include 'webui'
