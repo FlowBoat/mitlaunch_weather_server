@@ -7,41 +7,37 @@ import xyz.nulldev.kdom.api.Component
 import xyz.nulldev.kdom.api.EmptyComponent
 
 class PageFrame: Component() {
-    private val pageStack = mutableListOf<LoadedPage>(
-            LoadedPage(ReportList(this), { ReportList(this) })
+    private val pageStack = mutableListOf<BasePage>(
+            ReportList(this)
     )
 
-    private val currentContent = field<BasePage>(pageStack.first().page)
+    private val currentContent = field(pageStack.first())
     private val backBtnField = field<Component>(EmptyComponent)
-    private val title = field(pageStack.first().page.name)
+    private val title = field(pageStack.first().name)
 
-    fun setCurrentContent(newContent: PageGenerator) {
-        val page = LoadedPage(newContent(), newContent)
-        pageStack.add(page)
+    fun setCurrentContent(newContent: BasePage) {
+        pageStack.add(newContent)
 
         backBtnField(backBtn)
-        currentContent(page.page)
-        title(page.page.name)
-    }
-
-    override suspend fun onCompile() {
+        currentContent(newContent)
+        title(newContent.name)
     }
 
     //language=html
     override fun dom() = """
-        <div>
-            <header class="mdc-toolbar mdc-toolbar--fixed">
-                <div class="mdc-toolbar__row">
-                    <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-                        $backBtnField
-                        <span class="mdc-toolbar__title catalog-title">$title</span>
-                    </section>
-                    <section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
-                    </section>
-                </div>
-            </header>
-            <main class="mdc-toolbar-fixed-adjust">$currentContent</main>
+<div>
+    <header class="mdc-toolbar mdc-toolbar--fixed">
+        <div class="mdc-toolbar__row">
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+                $backBtnField
+                <span class="mdc-toolbar__title catalog-title">$title</span>
+            </section>
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+            </section>
         </div>
+    </header>
+    <main class="mdc-toolbar-fixed-adjust">$currentContent</main>
+</div>
         """.toDom()
 
     val backBtn = Component.from {
@@ -56,13 +52,13 @@ class PageFrame: Component() {
                 if(pageStack.size <= 1)
                     backBtnField(EmptyComponent)
 
-                currentContent(last.page)
-                title(last.page.name)
+                currentContent(last)
+                title(last.name)
             }
         }
         //language=html
         """
-            <span kref="$btn" class="mdc-toolbar__icon--menu"><i class="material-icons">&#xE5C4;</i></span>
+<span kref="$btn" class="mdc-toolbar__icon--menu"><i class="material-icons">&#xE5C4;</i></span>
             """.toDom()
     }
 }

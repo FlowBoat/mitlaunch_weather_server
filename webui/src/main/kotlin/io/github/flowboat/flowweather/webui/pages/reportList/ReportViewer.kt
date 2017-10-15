@@ -8,9 +8,10 @@ import xyz.nulldev.kdom.api.Component
 class ReportViewer(val report: DeviceReport) : BasePage("Report Viewer") {
     private val sensorEntries = componentList<Component>()
 
+    //language=html
     override fun dom() = """
-        <nav style="padding-top: 8px" class="mdc-list-group">
-        $sensorEntries
+<nav style="padding-top: 8px" class="mdc-list-group">
+    $sensorEntries
 </nav>
         """.toDom()
 

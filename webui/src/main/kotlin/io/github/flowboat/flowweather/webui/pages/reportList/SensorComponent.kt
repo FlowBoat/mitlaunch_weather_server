@@ -8,14 +8,14 @@ import xyz.nulldev.kdom.api.Component
 class SensorComponent(val sensor: Sensor) : Component() {
     private val sensorValueEntries = componentList<Component>()
 
+    //language=html
     override fun dom() = """
-        <div>
-            <h3 class="mdc-list-group__subheader">${sensor.vendor}: ${sensor.name}</h3>
-        <ul class="mdc-list">
+<div>
+    <h3 class="mdc-list-group__subheader">${sensor.vendor}: ${sensor.name}</h3>
+    <ul class="mdc-list">
         $sensorValueEntries
     </ul>
-                </h3>
-                </div>
+</div>
         """.toDom()
 
     override suspend fun onAttach() {
@@ -25,10 +25,11 @@ class SensorComponent(val sensor: Sensor) : Component() {
     }
 
     fun sensorValueEntry(sensorValue: SensorValue) = Component.from {
+        //language=html
         """
-            <li class="mdc-list-item">
-            ${sensorValue.value}
-                </li>
+<li class="mdc-list-item">
+    ${sensorValue.value}
+</li>
             """.toDom()
     }
 }

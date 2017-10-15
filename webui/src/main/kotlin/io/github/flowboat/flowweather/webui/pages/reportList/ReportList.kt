@@ -11,8 +11,8 @@ class ReportList(val parent: PageFrame): BasePage("Reports") {
 
     //language=html
     override fun dom() = """
-        <nav class="mdc-list">
-        $reportList
+<nav class="mdc-list">
+    $reportList
 </nav>
         """.toDom()
 
@@ -27,17 +27,15 @@ class ReportList(val parent: PageFrame): BasePage("Reports") {
 
         onCompile = {
             root().onclick = {
-                parent.setCurrentContent {
-                    ReportViewer(report)
-                }
+                parent.setCurrentContent(ReportViewer(report))
             }
         }
 
         //language=html
         """
-            <span kref="$root" class="mdc-list-item" style="cursor: pointer">
-            ${report.date}: ${report.dbId}
-                </span>
+<span kref="$root" class="mdc-list-item" style="cursor: pointer">
+    ${report.date}: ${report.dbId}
+</span>
             """.toDom()
     }
 }
