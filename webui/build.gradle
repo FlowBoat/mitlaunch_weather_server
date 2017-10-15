@@ -39,3 +39,8 @@ task copyResources(type: Copy) {
 
 assembleWeb.dependsOn copyResources
 assemble.dependsOn assembleWeb
+
+//Include shared code
+sourceSets {
+    main.kotlin.srcDirs += "../shared/src/main/kotlin"
+}

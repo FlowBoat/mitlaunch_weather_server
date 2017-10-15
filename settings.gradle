@@ -2,3 +2,4 @@ rootProject.name = 'FlowServer'
 
 include 'server'
 include 'webui'
+include 'shared'

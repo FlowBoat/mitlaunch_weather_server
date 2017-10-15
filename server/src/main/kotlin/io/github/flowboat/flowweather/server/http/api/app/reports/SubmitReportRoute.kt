@@ -1,4 +1,4 @@
-package io.github.flowboat.flowweather.server.http.api.reports
+package io.github.flowboat.flowweather.server.http.api.app.reports
 
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.conf.global
@@ -8,12 +8,10 @@ import io.github.flowboat.flowweather.server.db.models.dao.DbDeviceReport
 import io.github.flowboat.flowweather.server.db.models.dao.DbSensor
 import io.github.flowboat.flowweather.server.db.models.dao.DbSensorValue
 import io.github.flowboat.flowweather.server.http.api.HttpApiSerializer
-import io.github.flowboat.flowweather.server.http.api.reports.model.DeviceReport
-import io.github.flowboat.flowweather.util.finiteOrNegativeOne
+import io.github.flowboat.flowweather.server.http.api.app.reports.model.DeviceReport
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.ktor.pipeline.PipelineInterceptor
-import org.joda.time.DateTime
-import java.math.BigDecimal
+import org.joda.time.LocalDateTime
 
 class SubmitReportRoute {
     private val serializer: HttpApiSerializer by Kodein.global.lazy.instance()
@@ -32,7 +30,7 @@ class SubmitReportRoute {
             val dbReport = DbDeviceReport.new {
                 userId = 0
                 deviceId = 0
-                date = DateTime.now()
+                date = LocalDateTime.now().toString()
             }
 
             report.sensorMap.forEach { t, u ->
@@ -40,7 +38,7 @@ class SubmitReportRoute {
                     this.report = dbReport
                     name = t.name
                     vendor = t.vendor
-                    power = BigDecimal(t.power.toDouble().finiteOrNegativeOne())
+                    power = t.power.toDouble()
                 }
 
                 u.value.forEachIndexed { index, fl ->
@@ -48,7 +46,7 @@ class SubmitReportRoute {
                         this.sensor = sensor
 
                         this.index = index
-                        value = BigDecimal(fl.toDouble().finiteOrNegativeOne())
+                        value = fl.toDouble()
                     }
                 }
             }

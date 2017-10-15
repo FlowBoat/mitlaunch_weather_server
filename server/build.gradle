@@ -18,6 +18,9 @@ repositories {
 mainClassName = "io.github.flowboat.flowweather.server.FWServer"
 
 dependencies {
+    //Include shared code
+    compile project(":shared")
+
     //DI
     compile 'com.github.salomonbrys.kodein:kodein:4.1.0'
     compile 'com.github.salomonbrys.kodein:kodein-conf:4.1.0'
@@ -32,6 +35,7 @@ dependencies {
 
     //Serialization
     compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.2'
 
     //Logging
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
@@ -76,5 +80,5 @@ task copyWebUI {
     }
 }
 
-copyWebUI.dependsOn task(":webui:assembleWeb")
-assemble.dependsOn copyWebUI
+copyWebUI.dependsOn project(":webui").getTasksByName("assembleWeb", false)
+processResources.dependsOn copyWebUI

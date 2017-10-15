@@ -8,7 +8,7 @@ import xyz.nulldev.kdom.api.EmptyComponent
 
 class PageFrame: Component() {
     private val pageStack = mutableListOf<LoadedPage>(
-            LoadedPage(ReportList(), { ReportList() })
+            LoadedPage(ReportList(this), { ReportList(this) })
     )
 
     private val currentContent = field<BasePage>(pageStack.first().page)

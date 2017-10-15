@@ -5,5 +5,5 @@ import org.jetbrains.exposed.dao.LongIdTable
 object DeviceReportTable: LongIdTable() {
     val userId = long("user_id")
     val deviceId = long("device_id")
-    val date = date("date")
+    val date = varchar("date", 200)
 }

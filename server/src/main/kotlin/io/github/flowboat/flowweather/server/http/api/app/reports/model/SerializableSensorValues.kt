@@ -1,7 +1,6 @@
-package io.github.flowboat.flowweather.server.http.api.reports.model
+package io.github.flowboat.flowweather.server.http.api.app.reports.model
 
 import kotlinx.serialization.Serializable
-import java.util.*
 
 //TODO SHARED CLASS!
 @Serializable
