@@ -3,6 +3,7 @@ package io.github.flowboat.flowweather.server.db
 import io.github.flowboat.flowweather.server.db.models.tables.DeviceReportTable
 import io.github.flowboat.flowweather.server.db.models.tables.SensorTable
 import io.github.flowboat.flowweather.server.db.models.tables.SensorValueTable
+import io.github.flowboat.flowweather.server.db.models.tables.SensorDataGroupTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils.create
 import org.jetbrains.exposed.sql.transactions.TransactionManager
@@ -31,7 +32,8 @@ class DatabaseManager {
             create(
                     DeviceReportTable,
                     SensorTable,
-                    SensorValueTable
+                    SensorValueTable,
+                    SensorDataGroupTable
             )
         }
     }

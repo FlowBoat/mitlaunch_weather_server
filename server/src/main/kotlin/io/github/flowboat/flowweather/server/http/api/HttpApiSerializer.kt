@@ -12,9 +12,10 @@ import kotlin.reflect.full.findAnnotation
 class HttpApiSerializer {
     val charset = CharsetConstants.UTF_8.charset
 
-    private val apiInterfaceSerializer = ApiInterfaceSerializer()
     val gson = GsonBuilder().setPrettyPrinting()
-            .registerTypeHierarchyAdapter(DbObj::class.java, apiInterfaceSerializer)
+            .registerTypeHierarchyAdapter(DbObj::class.java, ApiInterfaceSerializer())
+            .registerTypeHierarchyAdapter(Map::class.java, KotlinMapSerializer())
+            .registerTypeHierarchyAdapter(List::class.java, KotlinListSerializer())
             .create()
 
     inline fun <reified T : Any> serializeToString(obj: T): String =

@@ -4,5 +4,4 @@ import kotlinx.serialization.Serializable
 
 //TODO SHARED CLASS!
 @Serializable
-data class DeviceReport(val sensorMap: Map<String, List<SensorDataSnapshot>>)
-
+data class SensorDataSnapshot(val sensor: SerializableSensor, val value: SerializableSensorValues)

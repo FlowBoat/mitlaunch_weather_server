@@ -4,6 +4,7 @@ import org.jetbrains.exposed.dao.LongIdTable
 
 object SensorValueTable : LongIdTable() {
     val sensor = reference("sensor", SensorTable)
+    val group = reference("value_group", SensorDataGroupTable)
 
     val index = integer("value_index")
     //TODO Precision and scale?

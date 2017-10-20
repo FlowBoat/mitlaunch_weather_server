@@ -12,7 +12,7 @@ class PageFrame: Component() {
     )
 
     private val currentContent = field(pageStack.first())
-    private val backBtnField = field<Component>(EmptyComponent)
+    private val backBtnField = field<Component>(EmptyComponent())
     private val title = field(pageStack.first().name)
 
     fun setCurrentContent(newContent: BasePage) {
@@ -50,7 +50,7 @@ class PageFrame: Component() {
                 val last = pageStack.last()
 
                 if(pageStack.size <= 1)
-                    backBtnField(EmptyComponent)
+                    backBtnField(EmptyComponent())
 
                 currentContent(last)
                 title(last.name)

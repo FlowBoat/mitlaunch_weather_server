@@ -24,6 +24,4 @@ class DbSensor(id: EntityID<Long>): LongEntity(id), Sensor {
     var powerBD by SensorTable.power
 
     override val dbId by DbIdBinding(id)
-
-    val values by DbSensorValue referrersOn SensorValueTable.sensor
 }

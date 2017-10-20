@@ -1,11 +1,9 @@
 package io.github.flowboat.flowweather.webui.pages.reportList
 
 import io.github.flowboat.flowweather.shared.sensor.Sensor
-import io.github.flowboat.flowweather.shared.sensor.SensorValue
-import io.github.flowboat.flowweather.webui.api.HttpApiProvider
 import xyz.nulldev.kdom.api.Component
 
-class SensorComponent(val sensor: Sensor) : Component() {
+class SensorComponent(val sensor: Sensor, val values: FloatArray) : Component() {
     private val sensorValueEntries = componentList<Component>()
 
     //language=html
@@ -19,16 +17,16 @@ class SensorComponent(val sensor: Sensor) : Component() {
         """.toDom()
 
     override suspend fun onAttach() {
-        HttpApiProvider.getSensorValues(sensor).sortedBy { it.index }.forEach {
+        values.forEach {
             sensorValueEntries += sensorValueEntry(it)
         }
     }
 
-    fun sensorValueEntry(sensorValue: SensorValue) = Component.from {
+    fun sensorValueEntry(value: Float) = Component.from {
         //language=html
         """
 <li class="mdc-list-item">
-    ${sensorValue.value}
+    $value
 </li>
             """.toDom()
     }
