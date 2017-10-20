@@ -1,7 +1,6 @@
 package io.github.flowboat.flowweather.webui.pages.root
 
 import io.github.flowboat.flowweather.webui.pages.base.BasePage
-import io.github.flowboat.flowweather.webui.pages.base.PageGenerator
 import io.github.flowboat.flowweather.webui.pages.reportList.ReportList
 import xyz.nulldev.kdom.api.Component
 import xyz.nulldev.kdom.api.EmptyComponent
@@ -40,20 +39,26 @@ class PageFrame: Component() {
 </div>
         """.toDom()
 
+    fun goBack() {
+        if(pageStack.size > 1) {
+            //Pop last from stack
+            pageStack.removeAt(pageStack.lastIndex)
+            //Get last
+            val last = pageStack.last()
+
+            if (pageStack.size <= 1)
+                backBtnField(EmptyComponent())
+
+            currentContent(last)
+            title(last.name)
+        }
+    }
+
     val backBtn = Component.from {
         val btn = htmlElement()
         onAttach = {
             btn().onclick = {
-                //Pop last from stack
-                pageStack.removeAt(pageStack.lastIndex)
-                //Get last
-                val last = pageStack.last()
-
-                if(pageStack.size <= 1)
-                    backBtnField(EmptyComponent())
-
-                currentContent(last)
-                title(last.name)
+                goBack()
             }
         }
         //language=html

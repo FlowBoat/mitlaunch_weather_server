@@ -4,13 +4,15 @@ import io.github.flowboat.flowweather.shared.sensor.DeviceReport
 import io.github.flowboat.flowweather.shared.sensor.Sensor
 import io.github.flowboat.flowweather.webui.api.HttpApiProvider
 import io.github.flowboat.flowweather.webui.pages.base.BasePage
+import io.github.flowboat.flowweather.webui.pages.root.PageFrame
 import io.github.flowboat.flowweather.webui.util.parseDate
 import xyz.nulldev.kdom.api.Component
 import xyz.nulldev.kdom.api.EmptyComponent
 import xyz.nulldev.kdom.api.util.dataValue
+import kotlin.browser.window
 import kotlin.js.Date
 
-class ReportViewer(val report: DeviceReport) : BasePage("Report Viewer") {
+class ReportViewer(val parent: PageFrame, val report: DeviceReport) : BasePage("Report Viewer") {
     private val snapshot = field<Component>(EmptyComponent())
     private val sliderComp = field<Component>(EmptyComponent())
 
@@ -30,6 +32,18 @@ class ReportViewer(val report: DeviceReport) : BasePage("Report Viewer") {
         val sensors = HttpApiProvider.getSensors(report)
         val groups = HttpApiProvider.getSensorDataGroups(report).map {
             Pair(it, parseDate(it.jsTime))
+        }
+
+        //Validate report size
+        if(groups.isEmpty() || sensors.isEmpty()) {
+            window.alert("This report is empty!")
+            parent.goBack()
+            return
+        }
+        if(groups.size < 2) {
+            window.alert("This report is too small to view! A report must contain at least 2 snapshots!")
+            parent.goBack()
+            return
         }
 
         //Place groups in chain (but do not include values as we don't have them yet)

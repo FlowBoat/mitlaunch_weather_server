@@ -27,7 +27,7 @@ class ReportList(val parent: PageFrame): BasePage("Reports") {
 
         onCompile = {
             root().onclick = {
-                parent.setCurrentContent(ReportViewer(report))
+                parent.setCurrentContent(ReportViewer(parent, report))
             }
         }
 
