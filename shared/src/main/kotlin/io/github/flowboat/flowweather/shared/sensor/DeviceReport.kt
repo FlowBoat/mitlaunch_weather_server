@@ -5,5 +5,5 @@ import io.github.flowboat.flowweather.shared.DbObj
 interface DeviceReport : DbObj {
     var userId: Long
     var deviceId: Long
-    var date: String
+    var uploadDate: Long
 }

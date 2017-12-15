@@ -16,7 +16,7 @@ interface ReportProvider : ApiProvider {
         return get("/list-sensor-data-groups?report=${report.dbId}")
     }
 
-    suspend fun getSensorValues(group: SensorDataGroup): Array<SensorValue> {
+    suspend fun getSensorValues(group: SensorDataGroup): Array<ReportEntry> {
         return get("/list-sensor-values?group=${group.dbId}")
     }
 }

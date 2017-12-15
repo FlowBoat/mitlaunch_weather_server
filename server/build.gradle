@@ -81,4 +81,5 @@ task copyWebUI {
 }
 
 copyWebUI.dependsOn project(":webui").getTasksByName("assembleWeb", false)
-processResources.dependsOn copyWebUI
+//TODO Fix webui
+//processResources.dependsOn copyWebUI

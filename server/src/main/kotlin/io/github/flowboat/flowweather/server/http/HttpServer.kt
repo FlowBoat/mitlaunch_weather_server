@@ -2,9 +2,7 @@ package io.github.flowboat.flowweather.server.http
 
 import io.github.flowboat.flowweather.server.http.api.app.reports.SubmitReportRoute
 import io.github.flowboat.flowweather.server.http.api.webui.reports.ListReportsRoute
-import io.github.flowboat.flowweather.server.http.api.webui.reports.ListSensorValueRoute
-import io.github.flowboat.flowweather.server.http.api.webui.reports.ListSensorDataGroupsRoute
-import io.github.flowboat.flowweather.server.http.api.webui.reports.ListSensorsRoute
+import io.github.flowboat.flowweather.server.http.api.webui.reports.ListReportEntriesRoute
 import org.jetbrains.ktor.content.resources
 import org.jetbrains.ktor.content.static
 import org.jetbrains.ktor.host.embeddedServer
@@ -28,9 +26,7 @@ class HttpServer {
                         }
                         route("/webui") {
                             get("/list-reports", ListReportsRoute().handler)
-                            get("/list-sensors", ListSensorsRoute().handler)
-                            get("/list-sensor-values", ListSensorValueRoute().handler)
-                            get("/list-sensor-data-groups", ListSensorDataGroupsRoute().handler)
+                            get("/list-report-entries", ListReportEntriesRoute().handler)
                         }
                     }
                 }
