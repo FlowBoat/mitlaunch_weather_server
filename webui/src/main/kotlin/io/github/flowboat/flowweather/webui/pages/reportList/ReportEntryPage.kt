@@ -1,6 +1,7 @@
 package io.github.flowboat.flowweather.webui.pages.reportList
 
 import io.github.flowboat.flowweather.shared.sensor.ReportEntry
+import io.github.flowboat.flowweather.webui.util.parseDate
 import xyz.nulldev.kdom.api.Component
 
 class ReportEntryPage(val entry: ReportEntry): Component() {
@@ -26,9 +27,10 @@ class ReportEntryPage(val entry: ReportEntry): Component() {
     private fun update() {
         loaderVisibility("none")
         entries.clear()
-        entries += SensorComponent("Temp", "°C", entry.temp)
-        entries += SensorComponent("Pressure", "kPa", entry.pressure)
-        entries += SensorComponent("Humidity", "%", entry.humidity)
-        entries += SensorComponent("Wind speed", "km/h", entry.windSpeed)
+        entries += SensorComponent("Date/time", "", parseDate(entry.time as Double).toString())
+        entries += SensorComponent("Temp", "°C", entry.temp.toString())
+        entries += SensorComponent("Pressure", "kPa", entry.pressure.toString())
+        entries += SensorComponent("Humidity", "%", entry.humidity.toString())
+        entries += SensorComponent("Wind speed", "km/h", entry.windSpeed.toString())
     }
 }

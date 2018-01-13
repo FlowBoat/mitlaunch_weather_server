@@ -2,7 +2,7 @@ package io.github.flowboat.flowweather.webui.pages.reportList
 
 import xyz.nulldev.kdom.api.Component
 
-class SensorComponent(val sensor: String, val unit: String, val value: Double) : Component() {
+class SensorComponent(val sensor: String, val unit: String, val value: String) : Component() {
     //language=html
     override fun dom() = """
 <div>
