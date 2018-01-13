@@ -1,8 +1,9 @@
 package io.github.flowboat.flowweather.webui.pages.reportList
 
+import io.github.flowboat.flowweather.shared.sensor.ReportEntry
 import xyz.nulldev.kdom.api.Component
 
-class SensorPage(val snapshot: SensorSnapshot): Component() {
+class ReportEntryPage(val entry: ReportEntry): Component() {
     private val entries = componentList<SensorComponent>()
     private val loaderVisibility = field("block")
 
@@ -19,21 +20,15 @@ class SensorPage(val snapshot: SensorSnapshot): Component() {
         """.toDom()
 
     override suspend fun onCompile() {
-        snapshot.updateListener = {
-            update()
-        }
         update()
     }
 
     private fun update() {
-        snapshot.content?.apply {
-            loaderVisibility("none")
-            entries.clear()
-            forEach {
-                entries += SensorComponent(it.first, it.second)
-            }
-        } ?: run {
-            loaderVisibility("block")
-        }
+        loaderVisibility("none")
+        entries.clear()
+        entries += SensorComponent("Temp", "°C", entry.temp)
+        entries += SensorComponent("Pressure", "kPa", entry.pressure)
+        entries += SensorComponent("Humidity", "%", entry.humidity)
+        entries += SensorComponent("Wind speed", "km/h", entry.windSpeed)
     }
 }

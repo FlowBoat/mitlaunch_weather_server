@@ -17,6 +17,7 @@ class ReportList(val parent: PageFrame): BasePage("Reports") {
         """.toDom()
 
     override suspend fun onAttach() {
+        reportList.clear()
         HttpApiProvider.getReports().forEach {
             reportList += report(it)
         }
@@ -34,7 +35,7 @@ class ReportList(val parent: PageFrame): BasePage("Reports") {
         //language=html
         """
 <span kref="$root" class="mdc-list-item" style="cursor: pointer">
-    ${report.date}: ${report.dbId}
+    User: ${report.userId}, device: ${report.deviceId}, date: ${report.uploadDate}, id: ${report.dbId}
 </span>
             """.toDom()
     }
