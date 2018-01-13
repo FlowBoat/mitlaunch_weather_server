@@ -27,7 +27,7 @@ class SubmitReportRoute {
         transaction {
             val dbReport = DbDeviceReport.new {
                 userId = 0
-                deviceId = 0
+                deviceId = report.deviceId
                 uploadDate = System.currentTimeMillis()
             }
 
